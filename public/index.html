@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>AI Resume Analyzer</title>
+<style>
+body{
+font-family: Arial;
+background:#f4f4f4;
+text-align:center;
+}
+.container{
+margin-top:80px;
+background:white;
+padding:40px;
+width:400px;
+margin:auto;
+border-radius:10px;
+box-shadow:0 0 10px gray;
+}
+button{
+padding:10px 20px;
+background:#007bff;
+color:white;
+border:none;
+border-radius:5px;
+cursor:pointer;
+}
+#result{
+margin-top:20px;
+font-size:18px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>AI Resume Analyzer</h2>
+
+<input type="file" id="resume">
+
+<br><br>
+
+<button onclick="uploadResume()">Analyze Resume</button>
+
+<div id="result"></div>
+
+</div>
+
+<script>
+
+async function uploadResume(){
+
+let file=document.getElementById("resume").files[0]
+
+let formData=new FormData()
+formData.append("resume",file)
+
+let response=await fetch("/analyze",{
+method:"POST",
+body:formData
+})
+
+let data=await response.json()
+
+document.getElementById("result").innerHTML=
+"<b>Resume Score:</b> "+data.score+
+"<br><br><b>Suggestions:</b><br>"+data.suggestions
+
+}
+
+</script>
+
+</body>
+</html>
